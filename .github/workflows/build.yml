@@ -39,19 +39,17 @@ jobs:
           node-version: "24"
 
       # =========================
-      # DOWNLOAD ZIP
+      # DOWNLOAD ZIP (FIXED PAKE WGET)
       # =========================
       - name: Download ZIP project
         run: |
           echo "=== Downloading ZIP ==="
           echo "URL: ${{ github.event.inputs.zip_url }}"
 
-          curl -L \
-            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-            -H "Accept: application/octet-stream" \
-            "${{ github.event.inputs.zip_url }}" \
-            -o project.zip \
-            -w "\n=== HTTP Status: %{http_code} ===\n=== Final URL: %{url_effective} ===\n"
+          wget --header="Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+               --header="Accept: application/octet-stream" \
+               -O project.zip \
+               "${{ github.event.inputs.zip_url }}"
 
           echo ""
           echo "=== File Info ==="
@@ -60,10 +58,6 @@ jobs:
           echo ""
           echo "=== File Type ==="
           file project.zip
-
-          echo ""
-          echo "=== First Bytes ==="
-          xxd project.zip | head -2
 
       # =========================
       # EXTRACT ZIP
