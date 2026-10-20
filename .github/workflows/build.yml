@@ -39,14 +39,14 @@ jobs:
           node-version: "24"
 
       # =========================
-      # DOWNLOAD ZIP (FIXED PAKE WGET)
+      # DOWNLOAD ZIP (PAKE TOKEN BAWAAN GITHUB)
       # =========================
       - name: Download ZIP project
         run: |
           echo "=== Downloading ZIP ==="
           echo "URL: ${{ github.event.inputs.zip_url }}"
 
-          wget --header="Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+          wget --header="Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                --header="Accept: application/octet-stream" \
                -O project.zip \
                "${{ github.event.inputs.zip_url }}"
